@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>案例</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- 引入 Bootstrap -->
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+ 
+      <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+      <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+      <!--[if lt IE 9]>
+         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
+   </head>
+   <body>
+      <h1>1.配置信息</h1>
+      <#form:form id="inputForm" model="${nbBusiness}" action="${ctx}/nb/nbBusiness/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<#form:hidden path="id"/>
+				<div class="row">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('商户名称')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input path="name" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('商户秘钥')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input path="secretKey" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('nb:nbBusiness:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+		
+		
+		<h1>2.签名方法</h1>
+		<p>apiUrl: 接口地址,以/结尾</p>
+		<p>randomString: 随机字符串</p>
+		<p>secretKey: 秘钥</p>
+		<p>import org.apache.commons.codec.digest.DigestUtils;</p>
+		<p>String sign = DigestUtils.md5Hex(DigestUtils.md5Hex(apiurl + randomString) + secretKey)</p>
+		
+		<h1>3.接口列表 <a href="${domain}/NB支付系统对接文档.docx">点击这里下载接口文档</a></h1>
+		<h2>3.1.支付</h2>
+		<h2>apiUrl: ${domain}/pay/getway/</h3>
+		<#form:form id="getwayForm" model="${nbBusiness}" action="${domain}/pay/getway/" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('randomString')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="randomString" value="abcd" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('sign')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="sign" value="${sign1}" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('businessId')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="businessId" value="${nbBusiness.id}" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('businessOrderId')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="businessOrderId" value="123456" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('description')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="description" value="牛肉面" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('extrat')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="extrat" value="本店特色菜牛肉面" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('money')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="money" value="1.00" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('payType')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="payType" value="alipay" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('notifyUrl')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="notifyUrl" value="回调地址" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('nb:nbBusiness:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+		
+		<h2>3.2.回调,不需要主动请求,回调参数如下</h2>
+		<#form:form id="getwayForm" model="${nbBusiness}" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('status')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="status" value="0" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('message')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="message" value="" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('money')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="money" value="1.00" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('realMoey')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="realMoey" value="0.99" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('businessId')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="businessId" value="businessId" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('businessOrderId')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="businessOrderId" value="businessOrderId" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+		</#form:form>
+		
+		<h2>3.3.订单查询</h3>
+		<h2>apiUrl: ${domain}/pay/order/query/</h3>
+		<#form:form id="inputForm" model="${nbBusiness}" action="${domain}/pay/order/query/" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('randomString')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="randomString" value="abcd" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('sign')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="sign" value="${sign2}" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('businessOrderId')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="businessOrderId" value="123456" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('businessId')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="businessId" value="${nbBusiness.id}" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('nb:nbBusiness:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+ 
+      <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+      <script src="https://code.jquery.com/jquery.js"></script>
+      <!-- 包括所有已编译的插件
+      <script src="js/bootstrap.min.js"></script> -->
+      <script type="text/javascript">
+      $(function(){
+    	  $("#inputForm").validate({
+    			submitHandler: function(form){
+    				js.ajaxSubmitForm($(form), function(data){
+    					js.showMessage(data.message);
+    					if(data.result == Global.TRUE){
+    						alert(data.message);
+    					}
+    				}, "json");
+    		    }
+    		});
+    	  
+      });
+      </script>
+   </body>
+</html>

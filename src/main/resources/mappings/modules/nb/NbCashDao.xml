@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeesite.modules.nb.dao.NbCashDao">
+	
+	<!-- 查询数据 -->
+	<select id="findList" resultType="NbCash">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			1=1
+			<if test="status!=-1">
+				and a.status = #{status}
+			</if>
+			<if test=" businessId != null and businessId != ''">
+				and a.business_id = #{businessId}
+			</if>
+			<if test=" createTime_gte != null">
+				<![CDATA[and a.create_time >= #{createTime_gte}]]>
+			</if>
+			
+			<if test=" createTime_lte != null">
+				<![CDATA[and a.create_time <= #{createTime_lte}]]>
+			</if>
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select>
+	
+</mapper>

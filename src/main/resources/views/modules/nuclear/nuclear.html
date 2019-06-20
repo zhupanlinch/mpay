@@ -1,0 +1,20 @@
+<% layout('/layouts/default.html', {title: '订单信息管理', libs: ['validate']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="col-sm-offset-50 col-sm-10">
+	      <button id="nuclear" type="button" class="btn btn-default" style="width:270px;height:70;background:red;font-size:40px;">归零</button>
+	    </div>
+	</div>
+</div>
+<% } %>
+<script type="text/javascript">
+$(function(){
+	  $('#nuclear').click(function(){
+		  if(confirm('此操作将无法恢复， 确定要执行此操作吗?')){
+			  $.get('${domain}/a/nuclear/do',function(data){
+				  alter(data);
+			  });
+		  }
+	  });
+});
+</script>

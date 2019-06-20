@@ -1,0 +1,116 @@
+<% layout('/layouts/default.html', {title: '订单信息管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('订单信息管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('nb:nbOrder:edit')){ %>
+					<a href="${ctx}/nb/nbOrder/form" class="btn btn-default btnTool" title="${text('新增订单信息')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${nbOrder}" action="${ctx}/nb/nbOrder/listDataThir" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('商户编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="businessId" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('商户订单号')}：</label>
+					<div class="control-inline">
+						<#form:input path="businessOrderId" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('商品描述')}：</label>
+					<div class="control-inline">
+						<#form:input path="description" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('商品附加信息')}：</label>
+					<div class="control-inline">
+						<#form:input path="extrat" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('支付状态')}：</label>
+					<div class="control-inline width-120">
+						<select name="status">
+						<option value="-1">全部</option>
+						<option value="1">成功</option>
+						<option value="0">失败</option>
+					</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('开始时间')}：</label>
+					<div class="control-inline">
+						<#form:input path="createDate_gte" readonly="true" maxlength="20" class="form-control Wdate-datetime"
+							dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:true});"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('结束时间')}：</label>
+					<div class="control-inline">
+						<#form:input path="createDate_lte" readonly="true" maxlength="20" class="form-control Wdate-datetime"
+							dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:true});"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("商户编号")}', name:'businessId', index:'a.business_id', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/nb/nbOrder/form?id='+row.id+'" class="btnList" data-title="${text("编辑订单信息")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("商户订单号")}', name:'businessOrderId', index:'a.business_order_id', width:150, align:"left"},
+		{header:'${text("商品描述")}', name:'description', index:'a.description', width:150, align:"left"},
+		{header:'${text("商品附加信息")}', name:'extrat', index:'a.extrat', width:150, align:"left"},
+		{header:'${text("总金额")}', name:'money', index:'a.money', width:150, align:"right", formatter: function(val, obj, row, act){
+			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
+		}},
+		{header:'${text("实际付款金额")}', name:'realMoney', index:'a.real_money', width:150, align:"right", formatter: function(val, obj, row, act){
+			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
+		}},
+		{header:'${text("通知地址")}', name:'notifyUrl', index:'a.notify_url', width:150, align:"left"},
+		{header:'${text("支付状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_yes_no')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("支付方式")}', name:'payType', index:'a.pay_type', width:150, align:"left"},
+		{header:'${text("创建时间")}', name:'createTime', index:'a.create_time', width:150, align:"center"},
+		{header:'${text("更新时间")}', name:'updateTime', index:'a.update_time', width:150, align:"center"},
+		{header:'${text("付款时间")}', name:'payTime', index:'a.pay_time', width:150, align:"center"}
+		,
+		 {header:'${text("操作")}', name:'actions', width:120, align:"center", sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('nb:nbOrder:edit')){ %>
+				actions.push('<a href="${ctx}/nb/nbOrder/form?id='+row.id+'" class="btnList" title="${text("编辑订单信息")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}} 
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

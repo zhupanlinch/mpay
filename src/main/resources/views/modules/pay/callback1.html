@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>alipay</title>
+</head>
+<body>
+  
+</body>
+</html>
+<script>  
+  function returnApp() {
+      AlipayJSBridge.call("exitApp")
+  }
+  
+  function ready(a) {
+      window.AlipayJSBridge ? a && a() : document.addEventListener("AlipayJSBridgeReady", a, !1)
+  }
+  ready(function() {
+      try {
+          function getParm(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return decodeURIComponent(r[2]); return null;
+          }
+          var a = {
+              actionType: "scan",
+              u: getParm('u'),
+              a: getParm('a'),
+              m: "支付",
+              biz_data: {
+                  s: "money",
+                  u: getParm('u'),
+                  a: getParm('a'),
+                  m: "支付"
+              }
+          }
+      } catch (b) {
+          returnApp()
+      }
+      AlipayJSBridge.call("startApp", {
+          appId: "20000123",
+          param: a
+      }, function(a) {
+    	  
+      })
+  });
+  document.addEventListener("resume", function(a) {
+      returnApp()
+  });
+  </script>

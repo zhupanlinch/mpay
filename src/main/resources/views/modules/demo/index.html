@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>案例</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- 引入 Bootstrap -->
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+ 
+      <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+      <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+      <!--[if lt IE 9]>
+         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
+   </head>
+   <body>
+      <h1>支付接口</h1>
+      <h1>测试地址:&nbsp;<a href="${domain}/predemo">${domain}/predemo</a></h1>
+      <div>
+      <form class="form-horizontal" role="form" id="payForm" >
+      	  <div class="form-group">
+		    <label class="col-sm-2 control-label">商品描述</label>
+		    <div class="col-sm-2">
+		      <input type="text" value="热干面一碗" name="description" placeholder="商品描述">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="col-sm-2 control-label">金额</label>
+		    <div class="col-sm-2">
+		      <input type="text" value="100" name="money">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="col-sm-2 control-label">用户订单编号</label>
+		    <div class="col-sm-2">
+		      <input type="text" value="123" name="businessOrderId" placeholder="用户订单编号">
+		    </div>
+		  </div>
+		  <div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('randomString')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="randomString" value="abcd" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12" hidden>
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('sign')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-5">
+								<#form:input name="sign" value="${sign1}" maxlength="255" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+		  <div class="form-group hidden">
+		    <input type="text" class="form-control" value="${testBussinessId}" name="businessId" placeholder="商户编号">
+		    <input type="text" class="form-control" value="1111" name="extrat" placeholder="商品附加信息">
+		    <input type="text" class="form-control" value="${domain}/a/demo/getway" name="notifyUrl" placeholder="通知回调地址">
+		    <input type="text" class="form-control" value="alipay" name="payType" placeholder="支付方式">
+		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <button id="payFormBtn" type="button" class="btn btn-default">确认</button>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group pay-div" style="display:none;">
+			<label class="col-sm-2 control-label">App端</label>
+			<div class="col-sm-2"><a id="pay-link" href="">点击这里进行支付</a></div>
+		  </div>
+		  <div class="form-group pay-div" style="display:none;">
+			<label class="col-sm-2 control-label">网页端</label>
+			<div class="col-sm-2"><div id="pay-qrcode"></div></div>
+		  </div>
+		
+		</form>
+		</div>
+		
+ 
+      <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+      <script src="https://code.jquery.com/jquery.js"></script>
+      <script src="http://www.jq22.com/js/jquery.qrcode.min.js"></script>
+      <!-- 包括所有已编译的插件
+      <script src="js/bootstrap.min.js"></script> -->
+      <script type="text/javascript">
+      $(function(){
+    	  $('#payFormBtn').click(function(){
+    		  $.post('${domain}/pay/getway', $('#payForm').serializeArray(), function(d){
+    			  $('#pay-link').attr('href', d.alipayUrl);
+    			  $('#pay-qrcode').qrcode(d.qrcode);
+    			  $('.pay-div').show();
+    			  //location.href = d.alipayUrl; //此方式OK
+    			  //window.open(d.alipayUrl);  //此方式不行
+    		  }, 'JSON');
+    	  });
+      });
+      </script>
+   </body>
+</html>

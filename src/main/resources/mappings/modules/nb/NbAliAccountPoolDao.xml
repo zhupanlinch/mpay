@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeesite.modules.nb.dao.NbAliAccountPoolDao">
+
+	<!-- 查询数据 -->
+	<select id="findList" resultType="NbAliAccountPool">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			1=1
+			<if test="status!=-1">
+				and a.status = #{status}
+			</if>
+			<if test=" userid !=null and userid != ''">
+				and a.userid = #{userid}
+			</if>
+			<if test=" userid !=null and userid != ''">
+				and a.userid = #{userid}
+			</if>
+			
+			<if test=" phone !=null and phone != ''">
+				and a.phone like  '%${phone}%'
+			</if>
+			
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select>
+	
+	
+  	<select id="selectBestAcount" resultType="NbAliAccountPool">
+  		select * from nb_ali_account_pool a where status = '1' order by weight desc, last_time limit 1
+  	</select>
+  	
+  	<select id="findByAlipayUserId" resultType="NbAliAccountPool">
+  		select * from nb_ali_account_pool a where userid = #{userid}  limit 1
+  	</select>
+  	
+  	<update id="delete">
+  		delete from nb_ali_account_pool where id = #{id}
+  	</update>
+</mapper>
