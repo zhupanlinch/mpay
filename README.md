@@ -62,8 +62,23 @@ Api地址：http(s)://你的服务器地址/addons/pay/
 支付宝->收钱->开启收款到账语音提醒
 
 ### 系统快照
-#### 使用前请详细阅读使用帮助的所有内容
+#### 一、使用前请详细阅读使用帮助的所有内容
 ![使用帮助](https://github.com/zhupanlinch/pay/blob/master/%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9.png)
+
+#### 二、支付体验
+![支付体验](https://github.com/zhupanlinch/pay/blob/master/%E6%94%AF%E4%BB%98%E4%BD%93%E9%AA%8C.png)
+
+#### 三、收款账号管理
+![收款账号管理](https://github.com/zhupanlinch/pay/blob/master/%E6%94%B6%E6%AC%BE%E8%B4%A6%E5%8F%B7%E7%AE%A1%E7%90%86.png)
+
+#### 四、订单管理
+![订单管理](https://github.com/zhupanlinch/pay/blob/master/%E8%AE%A2%E5%8D%95%E7%AE%A1%E7%90%86.png)
+
+#### 五、商户对接
+![商户对接](https://github.com/zhupanlinch/pay/blob/master/%E5%95%86%E6%88%B7%E5%AF%B9%E6%8E%A5.png)
+
+#### 二、更多功能等待您的探索
+
 
 ### 服务条款
 不得将 NBPay应用于危害国家安全、荣誉和利益的行为，不能以任何形式用于非法为目的的行为。
@@ -75,3 +90,6 @@ Api地址：http(s)://你的服务器地址/addons/pay/
 基于 NBPay开发的项目或产品名称以及公司名称，同意支持 NBPay推广的案例公布，谢谢您的支持。
 
 若您已经购买本产品许可文件或以其它方式获得的许可文件，将被视为您对本服务条款全部的完全接受，如果您未能遵守本服务条款，您的许可授权将被终止，许可的权利将被收回，同时您应承担相应法律责任。
+
+### 欢迎赞赏
+![赞赏](https://github.com/zhupanlinch/pay/blob/master/src/main/resources/static/common/%E8%B5%9E%E8%B5%8F%E7%A0%81.png)
