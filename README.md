@@ -1,7 +1,7 @@
 `求一Java团队收留 ` 联络邮箱：`jupanshuai@qq.com`
 **最新版本已增加风控指数指标，若有需要请联络**
-# pay
-### 支付宝个人免签支付项目
+# mpay
+### 支付宝个人免签支付项目介绍
 
 #### 一、首先目前的现状是：
 支付宝和微信早已不再支持个人接入即时到账收款接口！
@@ -91,6 +91,47 @@ Api地址：http(s)://你的服务器地址/addons/pay/
 基于 NBPay开发的项目或产品名称以及公司名称，同意支持 NBPay推广的案例公布，谢谢您的支持。
 
 若您已经购买本产品许可文件或以其它方式获得的许可文件，将被视为您对本服务条款全部的完全接受，如果您未能遵守本服务条款，您的许可授权将被终止，许可的权利将被收回，同时您应承担相应法律责任。
+
+### 技术选型
+
+#### 1.环境
+
+Java SDK 8
+Servlet 3.0/3.1
+Apache Maven 3.x
+
+#### 2.主框架
+
+Spring Boot 2.0
+Spring Framework 5.0
+Apache Shiro 1.4
+
+#### 3.持久层
+
+Apache MyBatis 3.4
+Hibernate Validation 6.0
+Alibaba Druid 1.1
+
+#### 4.视图层
+
+Spring MVC 5.0
+Beetl 2.9 替换JSP
+
+#### 5.数据高速缓存存储框架
+Redis
+
+#### 6.分布式套件/云平台
+
+分布式系统主框架：Spring Cloud Finchley
+服务治理注册与发现：Spring Cloud Netflix Eureka
+服务容错保护限流降级：Spring Cloud Netflix Hystrix
+分布式统一配置中心：Spring Cloud Config
+网关路由代理调用：Spring Cloud Gateway
+声明式服务调用：Spring Cloud OpenFeign
+
+#### 7.数据库
+
+mysql
 
 ### 欢迎赞赏
 ![赞赏](https://github.com/zhupanlinch/pay/blob/master/src/main/resources/static/common/%E8%B5%9E%E8%B5%8F%E7%A0%81.png)
