@@ -123,10 +123,15 @@ Redis
 #### 6.分布式套件/云平台
 
 分布式系统主框架：Spring Cloud Finchley
+
 服务治理注册与发现：Spring Cloud Netflix Eureka
+
 服务容错保护限流降级：Spring Cloud Netflix Hystrix
+
 分布式统一配置中心：Spring Cloud Config
+
 网关路由代理调用：Spring Cloud Gateway
+
 声明式服务调用：Spring Cloud OpenFeign
 
 #### 7.数据库
