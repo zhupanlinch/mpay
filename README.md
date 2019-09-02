@@ -97,24 +97,31 @@ Api地址：http(s)://你的服务器地址/addons/pay/
 #### 1.环境
 
 Java SDK 8
+
 Servlet 3.0/3.1
+
 Apache Maven 3.x
 
 #### 2.主框架
 
 Spring Boot 2.0
+
 Spring Framework 5.0
+
 Apache Shiro 1.4
 
 #### 3.持久层
 
 Apache MyBatis 3.4
+
 Hibernate Validation 6.0
+
 Alibaba Druid 1.1
 
 #### 4.视图层
 
 Spring MVC 5.0
+
 Beetl 2.9 替换JSP
 
 #### 5.数据高速缓存存储框架
